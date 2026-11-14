@@ -1,10 +1,9 @@
-[README (3).md](https://github.com/user-attachments/files/34860422/README.3.md)
-<div align="center">
-
 # PayFlow
 ### Intelligent Payment Reliability & Recovery Platform
 
 A full-stack fintech simulator demonstrating reliable payment workflows, transaction consistency, and asynchronous event delivery.
+
+<div align="center">
 
 [![React](https://img.shields.io/badge/React-18-61DAFB?logo=react&logoColor=0b1020)](https://react.dev/)
 [![Node.js](https://img.shields.io/badge/Node.js-20%2B-339933?logo=nodedotjs&logoColor=white)](https://nodejs.org/)
@@ -13,7 +12,7 @@ A full-stack fintech simulator demonstrating reliable payment workflows, transac
 [![Redis](https://img.shields.io/badge/Redis-7-DC382D?logo=redis&logoColor=white)](https://redis.io/)
 [![BullMQ](https://img.shields.io/badge/Queue-BullMQ-E34F26)](https://bullmq.io/)
 
-[Overview](#overview) · [Dashboard](#github-dashboard) · [Architecture](#architecture) · [Run locally](#run-locally) · [API](#api-reference)
+[Overview](#overview) · [Technology stack](#technology-stack) · [Architecture](#architecture) · [Run locally](#run-locally) · [API](#api-reference)
 
 </div>
 
@@ -22,10 +21,6 @@ A full-stack fintech simulator demonstrating reliable payment workflows, transac
 ## Overview
 
 PayFlow is a payment-infrastructure portfolio project built around a simulated payment provider. It demonstrates how a payment application can handle retries, state transitions, financial records, and asynchronous webhook delivery.
-
-<table>
-<tr>
-<td width="58%" valign="middle">
 
 ### Built around reliability
 
@@ -37,27 +32,33 @@ PayFlow is a payment-infrastructure portfolio project built around a simulated p
 - **Webhook integrity:** Sign outgoing payloads with HMAC-SHA256.
 - **Merchant access:** Hashed demo API keys and bearer authentication.
 
-</td>
-<td width="42%" align="center" valign="middle">
-
-<img src="./docs/images/PayFlow_Realtime_TechStack_Circles.gif" alt="Animated PayFlow architecture showing the frontend, API, database, queue and infrastructure" width="100%" />
-
-<sub><strong>PAYFLOW · SYSTEM ARCHITECTURE</strong><br/>Animated service-flow illustration · not live production telemetry</sub>
-
-</td>
-</tr>
-</table>
-
-## Technology stack · animated composition
-
 <div align="center">
 
-<img src="./docs/images/payflow-techstack-circular.gif" alt="PayFlow technology stack with technology logos inside animated circular percentage indicators" width="100%" loading="lazy" />
+<img src="./PayFlow/docs/images/PayFlow_Realtime_TechStack_Circles.gif" alt="Animated PayFlow system architecture" width="100%" />
 
-<sub>Each circular indicator contains a technology mark and an animated percentage counter. The image is lazy-loaded by supporting browsers when it approaches the viewport. Percentages are illustrative component allocation, not live runtime telemetry.</sub>
+<sub><strong>PAYFLOW · SYSTEM ARCHITECTURE</strong><br/>
+Animated service-flow illustration · not live production telemetry</sub>
 
 </div>
 
+## Technology stack
+
+<div align="center">
+
+<img src="./PayFlow/docs/images/payflow-techstack-circular.gif" alt="PayFlow animated technology stack with circular technology indicators" width="100%" />
+
+<sub>Animated technology composition with illustrative percentage indicators. These are not live runtime metrics.</sub>
+
+</div>
+
+| Layer | Technologies |
+|---|---|
+| Frontend | React 18, Vite, JavaScript, CSS |
+| Backend | Node.js, Express, REST APIs |
+| Database | MongoDB, Mongoose |
+| Background jobs | Redis, BullMQ |
+| Reliability & security | Idempotency keys, HMAC-SHA256, API key hashing, Zod, Helmet, rate limiting |
+| Infrastructure | Docker Compose |
 
 ## Architecture
 
@@ -88,17 +89,6 @@ stateDiagram-v2
     REFUNDED --> [*]
 ```
 
-## Technology stack
-
-| Layer | Technologies |
-|---|---|
-| Frontend | React 18, Vite, JavaScript, CSS |
-| Backend | Node.js, Express, REST APIs |
-| Database | MongoDB, Mongoose |
-| Background jobs | Redis, BullMQ |
-| Reliability & security | Idempotency keys, HMAC-SHA256, API key hashing, Zod, Helmet, rate limiting |
-| Infrastructure | Docker Compose |
-
 ## Run locally
 
 ### Prerequisites
@@ -110,8 +100,8 @@ stateDiagram-v2
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/YOUR_GITHUB_USERNAME/PayFlow.git
-cd PayFlow
+git clone https://github.com/mubashshira25/-PayFlow-Intelligent-Payment-Reliability-Recovery-Platform.git
+cd -PayFlow-Intelligent-Payment-Reliability-Recovery-Platform
 ```
 
 ### 2. Start MongoDB and Redis
@@ -134,11 +124,13 @@ cd server
 Create `.env` from the example file.
 
 **Windows PowerShell**
+
 ```powershell
 Copy-Item .env.example .env
 ```
 
 **macOS / Linux**
+
 ```bash
 cp .env.example .env
 ```
@@ -154,7 +146,7 @@ WEBHOOK_SECRET=replace-with-a-long-random-secret
 DEMO_MERCHANT_NAME=PayFlow Demo Merchant
 ```
 
-Install, seed the demo merchant, and run:
+Install dependencies, seed the demo merchant, and start the backend:
 
 ```bash
 npm install
@@ -162,7 +154,11 @@ npm run seed
 npm run dev
 ```
 
-Copy the generated demo API key printed by the seed command. The API health endpoint is `http://localhost:5001/api/health`.
+Copy the generated demo API key printed by the seed command.
+
+API health endpoint:
+
+`http://localhost:5001/api/health`
 
 ### 4. Configure and start the frontend
 
@@ -172,19 +168,21 @@ Open a second terminal from the project root:
 cd client
 ```
 
-Create the frontend `.env` file using the same approach:
+Create the frontend `.env` file using the same approach.
 
 **Windows PowerShell**
+
 ```powershell
 Copy-Item .env.example .env
 ```
 
 **macOS / Linux**
+
 ```bash
 cp .env.example .env
 ```
 
-Then:
+Install dependencies and start the frontend:
 
 ```bash
 npm install
@@ -195,7 +193,7 @@ Open `http://localhost:5173` and use the demo merchant API key.
 
 ## API reference
 
-Merchant endpoints require:
+Merchant endpoints require bearer authentication:
 
 ```http
 Authorization: Bearer YOUR_API_KEY
@@ -219,28 +217,32 @@ A Postman collection is available at `docs/PayFlow.postman_collection.json`.
 ## Project structure
 
 ```text
-PayFlow/
-├── client/
-├── server/
-├── docs/
-│   ├── images/
-│   │   └── payflow-techstack-circular.gif
-│   └── PayFlow.postman_collection.json
-├── docker-compose.yml
-├── mongo-init.js
+Repository/
+├── PayFlow/
+│   ├── client/
+│   ├── server/
+│   ├── docs/
+│   │   ├── images/
+│   │   │   ├── PayFlow_Realtime_TechStack_Circles.gif
+│   │   │   └── payflow-techstack-circular.gif
+│   │   └── PayFlow.postman_collection.json
+│   ├── docker-compose.yml
+│   └── mongo-init.js
 └── README.md
 ```
 
 ## Scope and limitations
 
-PayFlow uses a deterministic simulated payment provider. It does **not** move real money and is not connected to live PayPal processing. PayPal Sandbox support is a possible future enhancement. The current workflow supports full refunds only and is intended for learning and portfolio demonstration.
+PayFlow uses a deterministic simulated payment provider. It does **not** move real money and is not connected to live PayPal processing. PayPal Sandbox support is a possible future enhancement.
+
+The current workflow supports full refunds only and is intended for learning and portfolio demonstration.
 
 ## Contact
 
 Questions, feedback, or collaboration:
 
 - **Email:** [mdmubashshira25@gmail.com](mailto:mdmubashshira25@gmail.com)
-- **GitHub:** [YOUR_GITHUB_USERNAME](https://github.com/YOUR_GITHUB_USERNAME)
+- **GitHub:** [mubashshira25](https://github.com/mubashshira25)
 
 ---
 
