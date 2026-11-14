@@ -1,4 +1,4 @@
-[README (1).md](https://github.com/user-attachments/files/34860256/README.1.md)
+[README (3).md](https://github.com/user-attachments/files/34860422/README.3.md)
 <div align="center">
 
 # PayFlow
@@ -40,7 +40,7 @@ PayFlow is a payment-infrastructure portfolio project built around a simulated p
 </td>
 <td width="42%" align="center" valign="middle">
 
-<img src="./docs/images/PayFlow_Orbital_Technology (1).gif" alt="Animated PayFlow architecture showing the frontend, API, database, queue and infrastructure" width="100%" />
+<img src="./docs/images/payflow-techstack-circular.gif" alt="Animated PayFlow architecture showing the frontend, API, database, queue and infrastructure" width="100%" />
 
 <sub><strong>PAYFLOW · SYSTEM ARCHITECTURE</strong><br/>Animated service-flow illustration · not live production telemetry</sub>
 
@@ -48,24 +48,16 @@ PayFlow is a payment-infrastructure portfolio project built around a simulated p
 </tr>
 </table>
 
-## Technology composition
+## Technology stack · animated composition
 
 <div align="center">
 
-<img src="./docs/images/payflow-technology-composition.gif" alt="Animated circular PayFlow technology stack composition" width="100%" />
+<img src="./docs/images/payflow-techstack-circular.gif" alt="PayFlow technology stack with technology logos inside animated circular percentage indicators" width="100%" loading="lazy" />
 
-<sub>Illustrative stack composition · percentages describe the relative representation of components in this project, not measured code volume, runtime usage, traffic, or production telemetry.</sub>
+<sub>Each circular indicator contains a technology mark and an animated percentage counter. The image is lazy-loaded by supporting browsers when it approaches the viewport. Percentages are illustrative component allocation, not live runtime telemetry.</sub>
 
 </div>
 
-| Technology | Illustrative share | Responsibility |
-|---|---:|---|
-| React | 25% | Merchant dashboard |
-| Node.js | 25% | Backend runtime |
-| Express | 15% | REST API layer |
-| MongoDB | 15% | Persistent data |
-| Redis | 10% | Queue storage |
-| BullMQ | 10% | Background job processing |
 
 ## Architecture
 
@@ -232,7 +224,7 @@ PayFlow/
 ├── server/
 ├── docs/
 │   ├── images/
-│   │   └── payflow-technology-composition.gif
+│   │   └── payflow-techstack-circular.gif
 │   └── PayFlow.postman_collection.json
 ├── docker-compose.yml
 ├── mongo-init.js
