@@ -1,0 +1,22 @@
+services:
+  mongo:
+    image: mongo:7
+    container_name: payflow-mongo
+    command: ["mongod", "--replSet", "rs0", "--bind_ip_all"]
+    ports: ["27017:27017"]
+    volumes:
+      - payflow_mongo_data:/data/db
+      - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+  redis:
+    image: redis:7-alpine
+    container_name: payflow-redis
+    ports: ["6379:6379"]
+    volumes: ["payflow_redis_data:/data"]
+volumes:
+  payflow_mongo_data:
+  payflow_redis_data:
