@@ -1,4 +1,4 @@
-<div align="center">
+ <div align="center">
 
 # PayFlow
 ### Intelligent Payment Reliability & Recovery Platform
@@ -33,9 +33,14 @@ It makes the important parts of a payment workflow visible: state changes, idemp
 </td>
 <td width="42%" align="center" valign="middle">
 
-<img src="docs/images/tech-stack-orbit.gif" alt="Animated PayFlow technology ecosystem" width="100%"/>
+<a href="docs/images/tech-stack-orbit.gif">
+<img src="./docs/images/tech-stack-orbit.gif" alt="PayFlow animated technology architecture" width="100%" />
+</a>
 
-<sub>Animated technology map · illustrative service relationships, not live production telemetry</sub>
+<p align="center">
+<sub><strong>TECHNOLOGY ECOSYSTEM</strong><br/>
+Animated architecture · illustrating service relationships and interactions</sub>
+</p>
 
 </td>
 </tr>
@@ -70,24 +75,31 @@ Each successful transition is recorded as a payment event. Capture and refund op
 ## Core capabilities
 
 ### 01 — Payment lifecycle
+
 Create a payment, authorize it, capture the authorized amount and issue a full refund. The API enforces supported state transitions instead of allowing arbitrary status updates.
 
 ### 02 — Idempotent payment creation
+
 The create-payment endpoint accepts an `Idempotency-Key`. PayFlow hashes the normalized request payload, associates the key with the merchant and detects attempts to reuse the same key with a different request body.
 
 ### 03 — Double-entry ledger
+
 Capture and refund operations produce debit and credit journal entries. The ledger service validates that each journal entry balances before it is persisted.
 
 ### 04 — Asynchronous webhook delivery
+
 Payment events are queued through BullMQ and Redis. Delivery attempts are recorded, and failed jobs can be retried using exponential backoff.
 
 ### 05 — Webhook signing
+
 Outgoing demo webhooks are signed with HMAC-SHA256. The signature is sent in the `X-PayFlow-Signature` header and is calculated over the exact raw request bytes.
 
 ### 06 — Merchant API authentication
+
 A seed script creates a demo merchant and prints its API key once. The application stores the SHA-256 hash rather than the plaintext key. Merchant endpoints use bearer-token authentication.
 
 ### 07 — Merchant dashboard
+
 The React dashboard supports payment creation and listing, authorization, capture, full refunds, payment event inspection, ledger review and webhook delivery monitoring.
 
 ## Architecture
@@ -174,6 +186,7 @@ PayFlow/
 ## Run locally
 
 ### Prerequisites
+
 - Node.js 20 or later
 - npm
 - Docker Desktop
@@ -221,11 +234,13 @@ cd server
 Create the environment file.
 
 **Windows PowerShell:**
+
 ```powershell
 Copy-Item .env.example .env
 ```
 
 **macOS / Linux:**
+
 ```bash
 cp .env.example .env
 ```
@@ -271,11 +286,13 @@ cd client
 Create the environment file.
 
 **Windows PowerShell:**
+
 ```powershell
 Copy-Item .env.example .env
 ```
 
 **macOS / Linux:**
+
 ```bash
 cp .env.example .env
 ```
