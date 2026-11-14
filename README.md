@@ -40,7 +40,7 @@ PayFlow is a payment-infrastructure portfolio project built around a simulated p
 </td>
 <td width="42%" align="center" valign="middle">
 
-<img src="./docs/images/payflow-techstack-circular.gif" alt="Animated PayFlow architecture showing the frontend, API, database, queue and infrastructure" width="100%" />
+<img src="./docs/images/PayFlow_Realtime_TechStack_Circles.gif" alt="Animated PayFlow architecture showing the frontend, API, database, queue and infrastructure" width="100%" />
 
 <sub><strong>PAYFLOW · SYSTEM ARCHITECTURE</strong><br/>Animated service-flow illustration · not live production telemetry</sub>
 
