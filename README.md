@@ -1,47 +1,104 @@
-<div align="center">PayFlow
-Intelligent Payment Reliability & Recovery Platform
-A payment-infrastructure simulator focused on reliable workflows, transaction consistency and asynchronous event delivery.
+[README.md](https://github.com/user-attachments/files/34860191/README.md)
+<div align="center">
 
+# PayFlow
+### Intelligent Payment Reliability & Recovery Platform
 
+A full-stack fintech simulator demonstrating reliable payment workflows, transaction consistency, and asynchronous event delivery.
 
+[![React](https://img.shields.io/badge/React-18-61DAFB?logo=react&logoColor=0b1020)](https://react.dev/)
+[![Node.js](https://img.shields.io/badge/Node.js-20%2B-339933?logo=nodedotjs&logoColor=white)](https://nodejs.org/)
+[![Express](https://img.shields.io/badge/Express-4-white?logo=express&logoColor=black)](https://expressjs.com/)
+[![MongoDB](https://img.shields.io/badge/MongoDB-7-47A248?logo=mongodb&logoColor=white)](https://www.mongodb.com/)
+[![Redis](https://img.shields.io/badge/Redis-7-DC382D?logo=redis&logoColor=white)](https://redis.io/)
+[![BullMQ](https://img.shields.io/badge/Queue-BullMQ-E34F26)](https://bullmq.io/)
 
+[Overview](#overview) · [Dashboard](#github-dashboard) · [Architecture](#architecture) · [Run locally](#run-locally) · [API](#api-reference)
 
+</div>
 
-</div><table>
+---
+
+## Overview
+
+PayFlow is a payment-infrastructure portfolio project built around a simulated payment provider. It demonstrates how a payment application can handle retries, state transitions, financial records, and asynchronous webhook delivery.
+
+<table>
 <tr>
-<td width="58%" valign="middle">Payments should be predictable—even when systems aren't.
-A payment workflow is more than a successful API response. Requests can be retried, workers can fail, webhooks can be delayed, and financial records must remain consistent.
+<td width="58%" valign="middle">
 
-PayFlow is a hands-on engineering project that explores those problems through a merchant dashboard, REST API, simulated provider, MongoDB persistence, a Redis-backed job queue and a double-entry ledger.
+### Built around reliability
 
-It makes the important parts of a payment workflow visible: state changes, idempotency, event history, webhook attempts and ledger movements.
+- **Payment lifecycle:** Create, authorize, capture, and full refund.
+- **Idempotency:** Detect duplicate requests and conflicting payloads.
+- **Double-entry ledger:** Record balanced debit and credit movements.
+- **Webhook processing:** Queue event delivery with BullMQ and Redis.
+- **Delivery retries:** Retry failed webhook jobs with backoff.
+- **Webhook integrity:** Sign outgoing payloads with HMAC-SHA256.
+- **Merchant access:** Hashed demo API keys and bearer authentication.
 
-The goal: demonstrate the engineering patterns behind reliable payment operations—not imitate a real payment processor.
 </td>
 <td width="42%" align="center" valign="middle">
-<img
-  src="./docs/images/payflow-architecture-flow.gif"
-  alt="PayFlow animated system architecture showing React, Node.js and Express, MongoDB, Redis and BullMQ, and Docker"
-  width="100%"
-/>
-<p align="center">
-  <sub><strong>PAYFLOW · SYSTEM ARCHITECTURE</strong><br/>
-  Animated architecture overview · illustrative service relationships, not live production telemetry</sub>
-</p></td>
+
+<img src="./docs/images/payflow-architecture-flow.gif" alt="Animated PayFlow architecture showing the frontend, API, database, queue and infrastructure" width="100%" />
+
+<sub><strong>PAYFLOW · SYSTEM ARCHITECTURE</strong><br/>Animated service-flow illustration · not live production telemetry</sub>
+
+</td>
 </tr>
-</table>At a glance
-Area	What PayFlow demonstrates
-Payment lifecycle	Create → Authorize → Capture → Refund
-Request reliability	Idempotency keys and payload conflict detection
-Financial records	Balanced debit/credit journal entries
-Event processing	Payment events and asynchronous webhook jobs
-Delivery resilience	BullMQ retries with exponential backoff
-Webhook integrity	HMAC-SHA256 signatures
-Merchant access	Hashed demo API keys and bearer authentication
-Persistence	MongoDB replica-set transactions
+</table>
 
+## GitHub dashboard
 
-Product workflow
+<div align="center">
+
+### Repository activity
+
+[![Stars](https://img.shields.io/github/stars/YOUR_GITHUB_USERNAME/PayFlow?style=for-the-badge&logo=github&label=STARS)](https://github.com/YOUR_GITHUB_USERNAME/PayFlow/stargazers)
+[![Forks](https://img.shields.io/github/forks/YOUR_GITHUB_USERNAME/PayFlow?style=for-the-badge&logo=git&label=FORKS)](https://github.com/YOUR_GITHUB_USERNAME/PayFlow/forks)
+[![Issues](https://img.shields.io/github/issues/YOUR_GITHUB_USERNAME/PayFlow?style=for-the-badge&logo=github&label=ISSUES)](https://github.com/YOUR_GITHUB_USERNAME/PayFlow/issues)
+[![Last commit](https://img.shields.io/github/last-commit/YOUR_GITHUB_USERNAME/PayFlow?style=for-the-badge&logo=git&label=LAST%20UPDATE)](https://github.com/YOUR_GITHUB_USERNAME/PayFlow/commits/main)
+
+<table>
+<tr>
+<td width="50%">
+<img src="https://github-readme-stats.vercel.app/api?username=YOUR_GITHUB_USERNAME&show_icons=true&hide_border=true&theme=transparent&rank_icon=github" alt="GitHub profile statistics" />
+</td>
+<td width="50%">
+<img src="https://streak-stats.demolab.com?user=YOUR_GITHUB_USERNAME&hide_border=true&theme=transparent" alt="GitHub contribution streak" />
+</td>
+</tr>
+<tr>
+<td colspan="2" align="center">
+<img src="https://github-readme-stats.vercel.app/api/top-langs/?username=YOUR_GITHUB_USERNAME&layout=compact&hide_border=true&theme=transparent&langs_count=8" alt="Most used programming languages" />
+</td>
+</tr>
+</table>
+
+<sub>GitHub cards are fetched from third-party services and may be cached. Repository badges reflect the public GitHub repository; profile cards reflect the account, not live PayFlow server telemetry.</sub>
+
+</div>
+
+## Architecture
+
+```mermaid
+flowchart LR
+    M[Merchant] --> UI[React + Vite]
+    UI --> API[Node.js + Express REST API]
+    API --> AUTH[Merchant Authentication]
+    AUTH --> PAY[Payment Workflow]
+    PAY --> DB[(MongoDB)]
+    PAY --> SIM[Simulated Provider]
+    PAY --> LEDGER[Double-entry Ledger]
+    PAY --> EVENT[Payment Events]
+    EVENT --> Q[BullMQ]
+    Q <--> REDIS[(Redis)]
+    Q --> WORKER[Webhook Worker]
+    WORKER --> HOOK[Webhook Delivery]
+```
+
+### Payment lifecycle
+
 ```mermaid
 stateDiagram-v2
     [*] --> CREATED
@@ -50,87 +107,141 @@ stateDiagram-v2
     CAPTURED --> REFUNDED: Full refund
     REFUNDED --> [*]
 ```
-Each successful transition is recorded as a payment event. Capture and refund operations also create ledger entries. Unsupported transitions are rejected by the API.
-Core capabilities
-01 — Payment lifecycle
-Create a payment, authorize it, capture the authorized amount and issue a full refund. The API enforces supported state transitions instead of allowing arbitrary status updates.
-02 — Idempotent payment creation
-The create-payment endpoint accepts an Idempotency-Key. PayFlow hashes the normalized request payload, associates the key with the merchant and detects attempts to reuse the same key with a different request body.
-03 — Double-entry ledger
-Capture and refund operations produce debit and credit journal entries. The ledger service validates that each journal entry balances before it is persisted.
-04 — Asynchronous webhook delivery
-Payment events are queued through BullMQ and Redis. Delivery attempts are recorded, and failed jobs can be retried using exponential backoff.
-05 — Webhook signing
-Outgoing demo webhooks are signed with HMAC-SHA256. The signature is sent in the X-PayFlow-Signature header and is calculated over the exact raw request bytes.
-06 — Merchant API authentication
-A seed script creates a demo merchant and prints its API key once. The application stores the SHA-256 hash rather than the plaintext key. Merchant endpoints use bearer-token authentication.
-07 — Merchant dashboard
-The React dashboard supports payment creation and listing, authorization, capture, full refunds, payment event inspection, ledger review and webhook delivery monitoring.
-Architecture
-```mermaid
-flowchart LR
-    M[Merchant] --> UI[React + Vite]
-    UI --> API[Express REST API]
-    API --> AUTH[Merchant Auth]
-    AUTH --> PAY[Payment Controller]
-    PAY --> DB[(MongoDB)]
-    PAY --> SIM[Provider Simulator]
-    PAY --> LEDGER[Ledger Service]
-    PAY --> EVENT[Payment Events]
-    EVENT --> Q[BullMQ]
-    Q <--> REDIS[(Redis)]
-    Q --> WORKER[Webhook Worker]
-    WORKER --> HOOK[Demo Webhook Receiver]
-    LEDGER --> DB
+
+## Technology stack
+
+| Layer | Technologies |
+|---|---|
+| Frontend | React 18, Vite, JavaScript, CSS |
+| Backend | Node.js, Express, REST APIs |
+| Database | MongoDB, Mongoose |
+| Background jobs | Redis, BullMQ |
+| Reliability & security | Idempotency keys, HMAC-SHA256, API key hashing, Zod, Helmet, rate limiting |
+| Infrastructure | Docker Compose |
+
+## Run locally
+
+### Prerequisites
+
+- Node.js 20+
+- npm
+- Docker Desktop
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/YOUR_GITHUB_USERNAME/PayFlow.git
+cd PayFlow
 ```
-Request path
-1. The dashboard sends a request to the Express API.
-2. Authentication middleware validates the merchant API key.
-3. Zod validates the request payload.
-4. Idempotency logic checks for a previous request with the same key.
-5. The payment controller invokes the simulated provider for the relevant operation.
-6. MongoDB persists payment, event and ledger changes using replica-set transactions where implemented.
-7. BullMQ handles asynchronous webhook delivery and retry scheduling.
-8. The dashboard retrieves updated payment, ledger and delivery records.
-Technology choices
-Technology	Role in this project
-React 18	Merchant dashboard UI
-Vite 5	Frontend development server and build
-Node.js 20+	Backend runtime
-Express 4	REST API and middleware
-MongoDB 7	Payments, events, merchants, ledger and delivery records
-Mongoose 8	MongoDB models and transaction support
-Redis 7	BullMQ queue storage
-BullMQ 5	Background webhook jobs and retries
-Zod	Request validation
-Helmet	HTTP security headers
-express-rate-limit	API rate limiting
-ioredis	Redis client
-Docker Compose	Local MongoDB and Redis services
-Node.js crypto	SHA-256 hashing and HMAC-SHA256 signatures
 
+### 2. Start MongoDB and Redis
 
-Repository layout
+From the project root:
+
+```bash
+docker compose up -d
+docker compose ps
+```
+
+MongoDB is configured as a single-node replica set (`rs0`) for local transaction support.
+
+### 3. Configure and start the backend
+
+```bash
+cd server
+```
+
+Create `.env` from the example file.
+
+**Windows PowerShell**
+```powershell
+Copy-Item .env.example .env
+```
+
+**macOS / Linux**
+```bash
+cp .env.example .env
+```
+
+Example configuration (use the actual variable names from your `.env.example`):
+
+```env
+PORT=5001
+MONGODB_URI=mongodb://127.0.0.1:27017/payflow_db?replicaSet=rs0
+REDIS_URL=redis://127.0.0.1:6379
+CLIENT_ORIGIN=http://localhost:5173
+WEBHOOK_SECRET=replace-with-a-long-random-secret
+DEMO_MERCHANT_NAME=PayFlow Demo Merchant
+```
+
+Install, seed the demo merchant, and run:
+
+```bash
+npm install
+npm run seed
+npm run dev
+```
+
+Copy the generated demo API key printed by the seed command. The API health endpoint is `http://localhost:5001/api/health`.
+
+### 4. Configure and start the frontend
+
+Open a second terminal from the project root:
+
+```bash
+cd client
+```
+
+Create the frontend `.env` file using the same approach:
+
+**Windows PowerShell**
+```powershell
+Copy-Item .env.example .env
+```
+
+**macOS / Linux**
+```bash
+cp .env.example .env
+```
+
+Then:
+
+```bash
+npm install
+npm run dev
+```
+
+Open `http://localhost:5173` and use the demo merchant API key.
+
+## API reference
+
+Merchant endpoints require:
+
+```http
+Authorization: Bearer YOUR_API_KEY
+```
+
+| Method | Endpoint | Purpose |
+|---|---|---|
+| `GET` | `/api/health` | Health check |
+| `POST` | `/api/v1/payments` | Create a payment |
+| `GET` | `/api/v1/payments` | List payments |
+| `GET` | `/api/v1/payments/:id` | Get payment details |
+| `POST` | `/api/v1/payments/:id/authorize` | Authorize |
+| `POST` | `/api/v1/payments/:id/capture` | Capture |
+| `POST` | `/api/v1/payments/:id/refund` | Full refund |
+| `GET` | `/api/v1/payments/:id/events` | Payment event history |
+| `GET` | `/api/v1/ledger` | Ledger entries |
+| `GET` | `/api/v1/webhook-deliveries` | Webhook delivery records |
+
+A Postman collection is available at `docs/PayFlow.postman_collection.json`.
+
+## Project structure
+
+```text
 PayFlow/
 ├── client/
-│   └── src/
-│       ├── App.jsx
-│       ├── api.js
-│       ├── main.jsx
-│       └── styles.css
 ├── server/
-│   ├── src/
-│   │   ├── config/          # MongoDB and Redis connections
-│   │   ├── controllers/     # Payment request handlers
-│   │   ├── middleware/      # Authentication and error handling
-│   │   ├── models/          # Mongoose schemas
-│   │   ├── routes/          # API routes
-│   │   ├── scripts/         # Demo merchant seed script
-│   │   ├── services/        # Provider, ledger and webhook logic
-│   │   ├── utils/           # Hashing helpers
-│   │   ├── app.js
-│   │   └── server.js
-│   └── tests/
 ├── docs/
 │   ├── images/
 │   │   └── payflow-architecture-flow.gif
@@ -138,142 +249,25 @@ PayFlow/
 ├── docker-compose.yml
 ├── mongo-init.js
 └── README.md
-Run locally
-Prerequisites
-- Node.js 20 or later
-- npm
-- Docker Desktop
-- Git (optional, for cloning)
-Verify:
-node --version
-npm --version
-docker --version
-1. Get the source
-git clone https://github.com/YOUR_USERNAME/PayFlow.git
-cd PayFlow
-Or download the repository ZIP and open the extracted folder in VS Code.
-2. Start infrastructure
-From the project root:
-docker compose up -d
-This starts MongoDB 7 on localhost:27017 and Redis 7 on localhost:6379. The MongoDB container is configured as a single-node replica set named rs0, required for the transaction workflow.
+```
 
-Check status:
-docker compose ps
-3. Configure and seed the backend
-cd server
-Create the environment file.
+## Scope and limitations
 
-Windows PowerShell:
-Copy-Item .env.example .env
-macOS / Linux:
-cp .env.example .env
-Example .env:
-PORT=5001
-MONGODB_URI=mongodb://127.0.0.1:27017/payflow_db?replicaSet=rs0
-REDIS_URL=redis://127.0.0.1:6379
-CLIENT_ORIGIN=http://localhost:5173
-WEBHOOK_SECRET=replace-with-a-long-random-secret
-DEMO_MERCHANT_NAME=PayFlow Demo Merchant
-Use a unique local webhook secret and keep .env out of version control.
+PayFlow uses a deterministic simulated payment provider. It does **not** move real money and is not connected to live PayPal processing. PayPal Sandbox support is a possible future enhancement. The current workflow supports full refunds only and is intended for learning and portfolio demonstration.
 
-Install dependencies and create the demo merchant:
-npm install
-npm run seed
-The seed command prints a generated API key. Copy it when displayed; the database stores its hash, not the plaintext value.
+## Contact
 
-Start the API:
-npm run dev
-Health check: http://localhost:5001/api/health
-4. Start the frontend
-Open a second terminal from the project root:
-cd client
-Create the environment file.
+Questions, feedback, or collaboration:
 
-Windows PowerShell:
-Copy-Item .env.example .env
-macOS / Linux:
-cp .env.example .env
-Install and run:
-npm install
-npm run dev
-Open http://localhost:5173 and enter the demo merchant API key generated earlier.
-Try a payment
-All merchant endpoints require:
-Authorization: Bearer YOUR_API_KEY
-Create a payment:
-curl -X POST http://localhost:5001/api/v1/payments \
-  -H "Content-Type: application/json" \
-  -H "Authorization: Bearer YOUR_API_KEY" \
-  -H "Idempotency-Key: order-demo-0001" \
-  -d '{
-    "amount": 12500,
-    "currency": "INR",
-    "description": "Demo purchase",
-    "customerReference": "CUSTOMER-001"
-  }'
-Amounts are integers in the smallest currency unit: 12500 represents ₹125.00.
+- **Email:** [mdmubashshira25@gmail.com](mailto:mdmubashshira25@gmail.com)
+- **GitHub:** [YOUR_GITHUB_USERNAME](https://github.com/YOUR_GITHUB_USERNAME)
 
-Use the returned payment ID:
-# Authorize
-curl -X POST http://localhost:5001/api/v1/payments/PAYMENT_ID/authorize \
-  -H "Authorization: Bearer YOUR_API_KEY"
+---
 
-# Capture
-curl -X POST http://localhost:5001/api/v1/payments/PAYMENT_ID/capture \
-  -H "Authorization: Bearer YOUR_API_KEY"
+<div align="center">
 
-# Full refund
-curl -X POST http://localhost:5001/api/v1/payments/PAYMENT_ID/refund \
-  -H "Authorization: Bearer YOUR_API_KEY"
-Replace PAYMENT_ID and YOUR_API_KEY with your local values.
-API reference
-Method	Endpoint	Purpose
-GET	/api/health	API health check
-POST	/api/v1/payments	Create payment
-GET	/api/v1/payments	List payments
-GET	/api/v1/payments/:id	Retrieve payment
-POST	/api/v1/payments/:id/authorize	Authorize payment
-POST	/api/v1/payments/:id/capture	Capture payment
-POST	/api/v1/payments/:id/refund	Full refund
-GET	/api/v1/payments/:id/events	Payment event history
-GET	/api/v1/ledger	Ledger entries
-GET	/api/v1/webhook-deliveries	Webhook delivery records
+**© 2026 PayFlow. All rights reserved.**
 
+Made with care for learning and demonstrating reliable fintech engineering.
 
-A Postman collection is included at docs/PayFlow.postman_collection.json.
-Engineering notes
-Why idempotency? Clients may retry requests after timeouts or lost responses. An idempotency key helps recognize a retry and avoid creating a second payment for the same logical request.
-
-Why a queue? Webhook delivery is an external side effect. Queueing separates delivery work from the main request path and provides a place to apply retry policies.
-
-Why a ledger? A payment status alone does not explain the financial movement. Debit and credit entries provide a record that can be inspected and reconciled.
-
-Why a replica set locally? MongoDB multi-document transactions require a replica set. Docker Compose starts a single-node replica set for local development.
-Tests
-Run backend tests from server:
-npm test
-Build the frontend from client:
-npm run build
-Roadmap
-Future enhancements—not current capabilities:
-- [ ] PayPal Sandbox provider adapter using OAuth and the Orders API
-- [ ] Merchant registration and secure user sessions
-- [ ] Partial refunds and refund-specific idempotency
-- [ ] Merchant-configurable webhook endpoints
-- [ ] More integration and failure-path tests
-- [ ] Structured logs and operational metrics
-- [ ] CI workflow and cloud deployment
-Scope and limitations
-PayFlow is an educational payment infrastructure simulator. Its default provider is deterministic and simulated; it does not move real money and is not connected to live PayPal processing. PayPal Sandbox integration is a future milestone.
-
-The project does not store card data and does not claim PCI DSS compliance. The current MVP supports full refunds only. Use synthetic test information and never enter real customer payment details or production credentials.
-Contributing
-1. Fork the repository.
-2. Create a focused feature branch.
-3. Make and test your change.
-4. Open a pull request with a clear description.
-<div align="center">PayFlow
-Reliable workflows. Consistent records. Resilient payment operations.
-
-Built as a fintech engineering portfolio project.
 </div>
