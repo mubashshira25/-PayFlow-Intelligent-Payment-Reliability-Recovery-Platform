@@ -1,4 +1,4 @@
-[README.md](https://github.com/user-attachments/files/34860191/README.md)
+[README (1).md](https://github.com/user-attachments/files/34860256/README.1.md)
 <div align="center">
 
 # PayFlow
@@ -40,7 +40,7 @@ PayFlow is a payment-infrastructure portfolio project built around a simulated p
 </td>
 <td width="42%" align="center" valign="middle">
 
-<img src="./docs/images/payflow-architecture-flow.gif" alt="Animated PayFlow architecture showing the frontend, API, database, queue and infrastructure" width="100%" />
+<img src="./docs/images/PayFlow_Orbital_Technology (1).gif" alt="Animated PayFlow architecture showing the frontend, API, database, queue and infrastructure" width="100%" />
 
 <sub><strong>PAYFLOW · SYSTEM ARCHITECTURE</strong><br/>Animated service-flow illustration · not live production telemetry</sub>
 
@@ -48,36 +48,24 @@ PayFlow is a payment-infrastructure portfolio project built around a simulated p
 </tr>
 </table>
 
-## GitHub dashboard
+## Technology composition
 
 <div align="center">
 
-### Repository activity
+<img src="./docs/images/payflow-technology-composition.gif" alt="Animated circular PayFlow technology stack composition" width="100%" />
 
-[![Stars](https://img.shields.io/github/stars/YOUR_GITHUB_USERNAME/PayFlow?style=for-the-badge&logo=github&label=STARS)](https://github.com/YOUR_GITHUB_USERNAME/PayFlow/stargazers)
-[![Forks](https://img.shields.io/github/forks/YOUR_GITHUB_USERNAME/PayFlow?style=for-the-badge&logo=git&label=FORKS)](https://github.com/YOUR_GITHUB_USERNAME/PayFlow/forks)
-[![Issues](https://img.shields.io/github/issues/YOUR_GITHUB_USERNAME/PayFlow?style=for-the-badge&logo=github&label=ISSUES)](https://github.com/YOUR_GITHUB_USERNAME/PayFlow/issues)
-[![Last commit](https://img.shields.io/github/last-commit/YOUR_GITHUB_USERNAME/PayFlow?style=for-the-badge&logo=git&label=LAST%20UPDATE)](https://github.com/YOUR_GITHUB_USERNAME/PayFlow/commits/main)
-
-<table>
-<tr>
-<td width="50%">
-<img src="https://github-readme-stats.vercel.app/api?username=YOUR_GITHUB_USERNAME&show_icons=true&hide_border=true&theme=transparent&rank_icon=github" alt="GitHub profile statistics" />
-</td>
-<td width="50%">
-<img src="https://streak-stats.demolab.com?user=YOUR_GITHUB_USERNAME&hide_border=true&theme=transparent" alt="GitHub contribution streak" />
-</td>
-</tr>
-<tr>
-<td colspan="2" align="center">
-<img src="https://github-readme-stats.vercel.app/api/top-langs/?username=YOUR_GITHUB_USERNAME&layout=compact&hide_border=true&theme=transparent&langs_count=8" alt="Most used programming languages" />
-</td>
-</tr>
-</table>
-
-<sub>GitHub cards are fetched from third-party services and may be cached. Repository badges reflect the public GitHub repository; profile cards reflect the account, not live PayFlow server telemetry.</sub>
+<sub>Illustrative stack composition · percentages describe the relative representation of components in this project, not measured code volume, runtime usage, traffic, or production telemetry.</sub>
 
 </div>
+
+| Technology | Illustrative share | Responsibility |
+|---|---:|---|
+| React | 25% | Merchant dashboard |
+| Node.js | 25% | Backend runtime |
+| Express | 15% | REST API layer |
+| MongoDB | 15% | Persistent data |
+| Redis | 10% | Queue storage |
+| BullMQ | 10% | Background job processing |
 
 ## Architecture
 
@@ -244,7 +232,7 @@ PayFlow/
 ├── server/
 ├── docs/
 │   ├── images/
-│   │   └── payflow-architecture-flow.gif
+│   │   └── payflow-technology-composition.gif
 │   └── PayFlow.postman_collection.json
 ├── docker-compose.yml
 ├── mongo-init.js
